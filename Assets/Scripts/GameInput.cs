@@ -31,5 +31,9 @@ namespace Neonmoe.MetalMiner {
         public float GetCharacterYawDelta() {
             return MouseLocked ? (Input.GetAxis("Mouse X") * 1.5f) : 0;
         }
+
+        public bool IsCharacterJumping() {
+            return Input.GetButtonDown("Jump");
+        }
     }
 }
