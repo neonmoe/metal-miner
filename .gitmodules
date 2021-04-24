@@ -1,0 +1,3 @@
+[submodule "RawAssets"]
+	path = RawAssets
+	url = https://github.com/neonmoe/metal-miner-assets
