@@ -15,6 +15,7 @@ namespace Neonmoe.MetalMiner {
 
         private bool EntirelyEmpty = false;
         private float[] Tiles = new float[WIDTH * HEIGHT * DEPTH];
+        private int[] TileTypes = new int[WIDTH * HEIGHT * DEPTH];
 
         public void Generate(int x, int y, int z) {
             if (y > 0) {
@@ -26,11 +27,35 @@ namespace Neonmoe.MetalMiner {
                     int TileY = ((i / WIDTH) % HEIGHT) + y * HEIGHT;
                     int TileZ = (i / WIDTH / HEIGHT) + z * DEPTH;
                     Tiles[i] = Mathf.PerlinNoise(TileX * 0.1f, TileZ * 0.1f) * 2 > TileY ? 1f : 0f;
+                    TileTypes[i] = 0;
                 }
             } else {
                 EntirelyEmpty = false;
                 for (int i = 0; i < WIDTH * HEIGHT * DEPTH; i++) {
+                    int TileX = (i % WIDTH) + x * WIDTH;
+                    int TileY = ((i / WIDTH) % HEIGHT) + y * HEIGHT;
+                    int TileZ = (i / WIDTH / HEIGHT) + z * DEPTH;
                     Tiles[i] = 1f;
+                    if (TileY >= -10) {
+                        TileTypes[i] = Mathf.PerlinNoise(TileX * 0.1f, TileZ * 0.1f) * 4 < TileY + 10 ? 1 : 2;
+                    } else {
+                        TileTypes[i] = 2;
+                    }
+                }
+                while (Random.value < 0.7f) {
+                    int VeinWidth = (int)(Random.value * 5);
+                    int VeinHeight = (int)(Random.value * 5);
+                    int VeinDepth = (int)(Random.value * 5);
+                    int BaseX = (int)(Random.value * (WIDTH - VeinWidth));
+                    int BaseY = (int)(Random.value * (HEIGHT - VeinHeight));
+                    int BaseZ = (int)(Random.value * (DEPTH - VeinDepth));
+                    for (int OffZ = BaseZ; OffZ < BaseZ + VeinDepth; OffZ++) {
+                        for (int OffY = BaseY; OffY < BaseY + VeinHeight; OffY++) {
+                            for (int OffX = BaseX; OffX < BaseX + VeinWidth; OffX++) {
+                                TileTypes[OffX + OffY * WIDTH + OffZ * WIDTH * HEIGHT] = 3;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -41,6 +66,10 @@ namespace Neonmoe.MetalMiner {
 
         public bool IsSolid(int x, int y, int z) {
             return !EntirelyEmpty && Tiles[x + y * WIDTH + z * WIDTH * HEIGHT] > 0.0f;
+        }
+
+        public int GetTileType(int x, int y, int z) {
+            return TileTypes[x + y * WIDTH + z * WIDTH * HEIGHT];
         }
 
         public void DamageTile(Vector3 worldPos, float damage) {

@@ -36,7 +36,7 @@ namespace Neonmoe.MetalMiner {
 
             Vector3 DrillAngles = DrillBitRootTransform.localEulerAngles;
             Vector3 DrillScale = DrillBitRootTransform.localScale;
-            if (GameInput.IsCharacterDrilling()) {
+            if (CanDrill && GameInput.IsCharacterDrilling()) {
                 DrillAudio.volume = Mathf.Lerp(DrillAudio.volume, 1.0f, 15f * Time.deltaTime);
                 ActiveDrillAudio.volume = Mathf.Lerp(ActiveDrillAudio.volume, 1.0f, 15f * Time.deltaTime);
                 Animator.SetBool("Drilling", true);
@@ -98,7 +98,7 @@ namespace Neonmoe.MetalMiner {
                             Debug.DrawLine(TargetingTransform.position, DrillBitTransform.position, Color.green);
 
                             if (AtDrillingPosition && GameInput.IsCharacterDrilling()) {
-                                float Damage = Time.deltaTime * (0.5f + (1f - Distance / TileDistanceCutoff) * 0.1f);
+                                float Damage = Time.deltaTime * 1.2f;
                                 Chunk.DamageTile(new Vector3(TileX + TileSize / 2f, TileY + TileSize / 2f, TileZ + TileSize / 2f), Damage);
                             }
                         }

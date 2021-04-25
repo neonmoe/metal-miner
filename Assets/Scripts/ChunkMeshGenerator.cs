@@ -36,6 +36,7 @@ namespace Neonmoe.MetalMiner {
             List<int> Indices = new List<int>();
             List<Vector3> Vertices = new List<Vector3>();
             List<Vector3> Normals = new List<Vector3>();
+            List<Vector2> UVs = new List<Vector2>();
             for (int z = 0; z < Chunk.DEPTH; z++) {
                 for (int y = 0; y < Chunk.HEIGHT; y++) {
                     for (int x = 0; x < Chunk.WIDTH; x++) {
@@ -92,6 +93,16 @@ namespace Neonmoe.MetalMiner {
                                 break;
                             }
 
+                            float UVTileSize = 0.5f;
+                            int Tile = Chunk.GetTileType(x, y, z);
+                            float UVTileX = (Tile % 2) * UVTileSize + 0.05f;
+                            float UVTileY = (Tile / 2) * UVTileSize + 0.05f;
+                            UVTileSize -= 0.1f;
+                            UVs.Add(new Vector2(UVTileX, -UVTileY));
+                            UVs.Add(new Vector2(UVTileX + UVTileSize, -UVTileY));
+                            UVs.Add(new Vector2(UVTileX + UVTileSize, -UVTileY - UVTileSize));
+                            UVs.Add(new Vector2(UVTileX, -UVTileY - UVTileSize));
+
                             for (int i = 0; i < 4; i++) {
                                 Indices.Add(BaseIndex + i);
                             }
@@ -106,6 +117,7 @@ namespace Neonmoe.MetalMiner {
             MeshFilter.mesh.Clear();
             MeshFilter.mesh.SetVertices(Vertices);
             MeshFilter.mesh.SetNormals(Normals);
+            MeshFilter.mesh.SetUVs(0, UVs);
             MeshFilter.mesh.indexFormat = IndexFormat.UInt32;
             MeshFilter.mesh.SetIndices(Indices, MeshTopology.Quads, 0);
             MeshFilter.mesh.Optimize();
