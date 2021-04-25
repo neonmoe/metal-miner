@@ -5515,8 +5515,8 @@ MonoBehaviour:
   ActiveDrillAudio: {fileID: 803881145376329430}
   Animator: {fileID: 1003600213062755137}
   DrillingParticleSystem: {fileID: 8064763344425961441}
-  TilePickingRadius: 1
-  TileDistanceCutoff: 1.5
+  TilePickingRadius: 3
+  TileDistanceCutoff: 2.5
 --- !u!95 &1003600213062755137
 Animator:
   serializedVersion: 3

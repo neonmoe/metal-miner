@@ -14,7 +14,7 @@ namespace Neonmoe.MetalMiner {
         public bool Dirty = false;
 
         private bool EntirelyEmpty = false;
-        private bool[] Tiles = new bool[WIDTH * HEIGHT * DEPTH];
+        private float[] Tiles = new float[WIDTH * HEIGHT * DEPTH];
 
         public void Generate(int x, int y, int z) {
             if (y > 0) {
@@ -25,12 +25,12 @@ namespace Neonmoe.MetalMiner {
                     int TileX = (i % WIDTH) + x * WIDTH;
                     int TileY = ((i / WIDTH) % HEIGHT) + y * HEIGHT;
                     int TileZ = (i / WIDTH / HEIGHT) + z * DEPTH;
-                    Tiles[i] = Mathf.PerlinNoise(TileX * 0.1f, TileZ * 0.1f) * 2 > TileY;
+                    Tiles[i] = Mathf.PerlinNoise(TileX * 0.1f, TileZ * 0.1f) * 2 > TileY ? 1f : 0f;
                 }
             } else {
                 EntirelyEmpty = false;
                 for (int i = 0; i < WIDTH * HEIGHT * DEPTH; i++) {
-                    Tiles[i] = true;
+                    Tiles[i] = 1f;
                 }
             }
         }
@@ -40,16 +40,16 @@ namespace Neonmoe.MetalMiner {
         }
 
         public bool IsSolid(int x, int y, int z) {
-            return !EntirelyEmpty && Tiles[x + y * WIDTH + z * WIDTH * HEIGHT];
+            return !EntirelyEmpty && Tiles[x + y * WIDTH + z * WIDTH * HEIGHT] > 0.0f;
         }
 
-        public void RemoveTile(Vector3 worldPos) {
+        public void DamageTile(Vector3 worldPos, float damage) {
             worldPos += new Vector3(WORLD_SPACE_WIDTH / 2, 0, WORLD_SPACE_DEPTH / 2);
             int TileX = (Mathf.FloorToInt(worldPos.x * WIDTH / WORLD_SPACE_WIDTH) % WIDTH + WIDTH) % WIDTH;
             int TileY = (Mathf.FloorToInt(worldPos.y * HEIGHT / WORLD_SPACE_HEIGHT) % HEIGHT + HEIGHT) % HEIGHT;
             int TileZ = (Mathf.FloorToInt(worldPos.z * DEPTH / WORLD_SPACE_DEPTH) % DEPTH + DEPTH) % DEPTH;
             EntirelyEmpty = false;
-            Tiles[TileX + TileY * WIDTH + TileZ * WIDTH * HEIGHT] = false;
+            Tiles[TileX + TileY * WIDTH + TileZ * WIDTH * HEIGHT] -= damage;
             Dirty = true;
         }
     }

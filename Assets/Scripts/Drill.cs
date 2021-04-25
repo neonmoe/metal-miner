@@ -73,7 +73,8 @@ namespace Neonmoe.MetalMiner {
                 for (int OffZ = -Radius; OffZ <= Radius; OffZ++) {
                     for (int OffY = -Radius; OffY <= Radius; OffY++) {
                         for (int OffX = -Radius; OffX <= Radius; OffX++) {
-                            if (Mathf.Sqrt(OffX * OffX + OffY * OffY + OffZ * OffZ) > TileDistanceCutoff) continue;
+                            float Distance = Mathf.Sqrt(OffX * OffX + OffY * OffY + OffZ * OffZ);
+                            if (Distance > TileDistanceCutoff) continue;
 
                             float TileX = Mathf.Floor(EffectiveDrillingPoint.x / TileSize) * TileSize + OffX * TileSize;
                             float TileY = Mathf.Floor(EffectiveDrillingPoint.y / TileSize) * TileSize + OffY * TileSize;
@@ -97,7 +98,8 @@ namespace Neonmoe.MetalMiner {
                             Debug.DrawLine(TargetingTransform.position, DrillBitTransform.position, Color.green);
 
                             if (AtDrillingPosition && GameInput.IsCharacterDrilling()) {
-                                Chunk.RemoveTile(new Vector3(TileX + TileSize / 2f, TileY + TileSize / 2f, TileZ + TileSize / 2f));
+                                float Damage = Time.deltaTime * (0.5f + (1f - Distance / TileDistanceCutoff) * 0.1f);
+                                Chunk.DamageTile(new Vector3(TileX + TileSize / 2f, TileY + TileSize / 2f, TileZ + TileSize / 2f), Damage);
                             }
                         }
                     }
