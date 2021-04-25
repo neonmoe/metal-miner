@@ -35,5 +35,9 @@ namespace Neonmoe.MetalMiner {
         public bool IsCharacterJumping() {
             return Input.GetButtonDown("Jump");
         }
+
+        public bool IsCharacterDrilling() {
+            return Input.GetButton("Fire1");
+        }
     }
 }

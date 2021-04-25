@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 64296135279418617}
   - component: {fileID: 64296135279418622}
   - component: {fileID: 64296135279418619}
-  - component: {fileID: 2589663236896534872}
+  - component: {fileID: 7394043616507014780}
+  - component: {fileID: 5177647607508112837}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Untagged
@@ -96,8 +97,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203873dd3f1a8a951944cb98dd5bf409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &2589663236896534872
-BoxCollider:
+--- !u!114 &7394043616507014780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64296135279418623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9148a7d6055bc7908ae7e3963efbe296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &5177647607508112837
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,6 +119,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 8, y: 4, z: 8}
-  m_Center: {x: 4, y: 2, z: 4}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}

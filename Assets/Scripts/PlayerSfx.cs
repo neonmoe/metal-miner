@@ -21,15 +21,14 @@ namespace Neonmoe.MetalMiner {
             Openness += GetRaycastLength(Vector3.back, 1.0f);
             Openness += GetRaycastLength(Vector3.right, 1.0f);
             Openness += GetRaycastLength(Vector3.left, 1.0f);
-            Openness = Mathf.Pow(Openness / 6.0f, 4.0f);
-            float WindVolume = Mathf.Clamp(Mathf.Pow(HeadTransform.position.y / 12.0f, 3.0f), -0.5f, 0.5f) + 0.5f;
+            Openness = HeadTransform.position.y > 0 ? Mathf.Pow(Openness / 6.0f, 4.0f) : 0.0f;
+            float WindVolume = Mathf.Clamp(Mathf.Pow(HeadTransform.position.y / 5.0f, 3.0f), -0.5f, 0.5f) + 0.5f;
             WindOutsideSource.volume = Mathf.Lerp(WindOutsideSource.volume,
                                                   Openness * WindVolume,
                                                   10f * Time.deltaTime);
             WindInsideSource.volume = Mathf.Lerp(WindInsideSource.volume,
-                                                  (1.0f - Openness) * 0.6f * WindVolume,
+                                                  (1.0f - Openness) * 0.4f * WindVolume,
                                                   10f * Time.deltaTime);
-            WindInsideSource.volume = (1.0f - Mathf.Pow(Openness, 4.0f)) * 0.6f;
         }
 
         private float GetRaycastLength(Vector3 direction, float length) {
