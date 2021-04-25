@@ -12,6 +12,7 @@ namespace Neonmoe.MetalMiner {
         public const float WORLD_SPACE_DEPTH = 8;
 
         public bool Dirty = false;
+        public bool Untouched = true;
 
         private bool EntirelyEmpty = false;
         private float[] Tiles = new float[WIDTH * HEIGHT * DEPTH];
@@ -42,10 +43,10 @@ namespace Neonmoe.MetalMiner {
                         TileTypes[i] = 2;
                     }
                 }
-                while (Random.value < 0.7f) {
-                    int VeinWidth = (int)(Random.value * 5);
-                    int VeinHeight = (int)(Random.value * 5);
-                    int VeinDepth = (int)(Random.value * 5);
+                while (Random.value < 0.5f + 0.3f * -y / 10f) {
+                    int VeinWidth = (int)(Random.value * 4) + 2;
+                    int VeinHeight = (int)(Random.value * 4) + 2;
+                    int VeinDepth = (int)(Random.value * 4) + 2;
                     int BaseX = (int)(Random.value * (WIDTH - VeinWidth));
                     int BaseY = (int)(Random.value * (HEIGHT - VeinHeight));
                     int BaseZ = (int)(Random.value * (DEPTH - VeinDepth));
@@ -77,9 +78,13 @@ namespace Neonmoe.MetalMiner {
             int TileX = (Mathf.FloorToInt(worldPos.x * WIDTH / WORLD_SPACE_WIDTH) % WIDTH + WIDTH) % WIDTH;
             int TileY = (Mathf.FloorToInt(worldPos.y * HEIGHT / WORLD_SPACE_HEIGHT) % HEIGHT + HEIGHT) % HEIGHT;
             int TileZ = (Mathf.FloorToInt(worldPos.z * DEPTH / WORLD_SPACE_DEPTH) % DEPTH + DEPTH) % DEPTH;
+            int Index = TileX + TileY * WIDTH + TileZ * WIDTH * HEIGHT;
             EntirelyEmpty = false;
-            Tiles[TileX + TileY * WIDTH + TileZ * WIDTH * HEIGHT] -= damage;
-            Dirty = true;
+            Tiles[Index] -= damage;
+            if (Tiles[Index] <= 0.0f) {
+                Dirty = true;
+                Untouched = false;
+            }
         }
     }
 }

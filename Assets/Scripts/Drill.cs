@@ -25,7 +25,7 @@ namespace Neonmoe.MetalMiner {
         }
 
         private void Update() {
-            float DrillDistance = 3f;
+            float DrillDistance = 3.5f;
             Vector3 DrillPoint = TargetingTransform.position + TargetingTransform.forward * (DrillDistance - 0.7f);
             bool CanDrill = false;
             RaycastHit Hit;

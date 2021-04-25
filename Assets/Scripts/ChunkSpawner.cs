@@ -35,6 +35,7 @@ namespace Neonmoe.MetalMiner {
                             Chunks.Add(ChunkVec, NewChunk);
                         } else {
                             GameObject OldChunk = Chunks[ChunkVec];
+                            OldChunk.SetActive(true);
                             Chunk Chunk = OldChunk.GetComponent<Chunk>();
                             ChunkMeshGenerator ChunkMeshGenerator = OldChunk.GetComponent<ChunkMeshGenerator>();
                             if (Chunk.Dirty) {
@@ -48,8 +49,13 @@ namespace Neonmoe.MetalMiner {
             HashSet<Vector3> ChunksToRemove = new HashSet<Vector3>(Chunks.Keys);
             ChunksToRemove.ExceptWith(ChunksInRange);
             foreach (Vector3 OutOfRangePos in ChunksToRemove) {
-                Destroy(Chunks[OutOfRangePos]);
-                Chunks.Remove(OutOfRangePos);
+                GameObject ChunkObj = Chunks[OutOfRangePos];
+                if (ChunkObj.GetComponent<Chunk>().Untouched) {
+                    Destroy(ChunkObj);
+                    Chunks.Remove(OutOfRangePos);
+                } else {
+                    ChunkObj.SetActive(false);
+                }
             }
         }
 

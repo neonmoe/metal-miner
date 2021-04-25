@@ -18,20 +18,23 @@ namespace Neonmoe.MetalMiner {
         }
 
         private void Update() {
-            if (Input.GetButtonDown("Fire1") && Input.mousePosition.x > 500) {
+            if ((Input.GetButtonDown("Fire1") && Input.mousePosition.x > 500) || (Input.GetKeyDown("escape") && !MouseLocked)) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 MouseLocked = true;
                 PauseMenu.SetActive(false);
                 PauseMenuNote.SetActive(true);
-            }
-            if (Input.GetKeyDown("escape")) {
+            } else if (Input.GetKeyDown("escape")) {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 MouseLocked = false;
                 PauseMenu.SetActive(true);
                 PauseMenuNote.SetActive(false);
             }
+        }
+
+        public void QuitGame() {
+            Application.Quit();
         }
 
         public Vector3 GetCharacterMovementVector() {
