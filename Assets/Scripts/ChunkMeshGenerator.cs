@@ -12,9 +12,8 @@ namespace Neonmoe.MetalMiner {
 
         private MeshFilter MeshFilter;
 
-        private void Start() {
+        private void Awake() {
             MeshFilter = GetComponent<MeshFilter>();
-            Regenerate();
         }
 
         private List<CubeSide> RenderedSides(float[] voxels, int x, int y, int z, int width, int height, int depth) {
@@ -28,7 +27,7 @@ namespace Neonmoe.MetalMiner {
             return Sides;
         }
 
-        private void Regenerate() {
+        public void Regenerate() {
             float VoxelSize = 1f / 2f;
             int Width = 16;
             int Height = 8;
