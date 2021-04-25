@@ -167,7 +167,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.8
-  m_Radius: 0.3
+  m_Radius: 0.2
   m_SlopeLimit: 35
   m_StepOffset: 0.5
   m_SkinWidth: 0.08
@@ -200,7 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08bc2256d36508c7a0092ebcbddd537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvertMouseY: 0
+  PauseMenu: {fileID: 0}
+  PauseMenuNote: {fileID: 0}
 --- !u!114 &9109946627530001301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +270,7 @@ AudioSource:
   m_GameObject: {fileID: 4415377397524761397}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4812571223276294233, guid: cd251566c2ac37d3eb8c6f78f6fcf8c6, type: 2}
   m_audioClip: {fileID: 8300000, guid: b980dfba3345ceafe9b3b85db6431839, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0
@@ -5372,7 +5373,7 @@ AudioSource:
   m_GameObject: {fileID: 5691501088459735413}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 308728277191990773, guid: cd251566c2ac37d3eb8c6f78f6fcf8c6, type: 2}
   m_audioClip: {fileID: 8300000, guid: c787b1291785233efa8a4305d689e5e9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.299

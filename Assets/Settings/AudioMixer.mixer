@@ -29,11 +29,21 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 7972da23095e7ddf7a147d45d94a5cbf
+    name: Drill
+  - guid: 84f9162d038b41bcbb827ecb4a539bb4
+    name: Drilling
+  - guid: f7e73f29296233977a116d9e454b5b25
+    name: Master
+  - guid: bd5b164d1ac8d32628b64b9acc97b5ce
+    name: Wind
   m_AudioMixerGroupViews:
   - guids:
     - 7da6cd302d1f5a4ce9dbb9d492829927
     - 65856930f31336fad81cc4da5d504856
+    - 6c62eda13296cfc2f9ae9f66272cea9d
+    - ddb8b0cd56977a224ad2fee00a3a4b25
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -48,6 +58,8 @@ AudioMixerGroupController:
   m_GroupID: 7da6cd302d1f5a4ce9dbb9d492829927
   m_Children:
   - {fileID: 6280440431478618197}
+  - {fileID: 308728277191990773}
+  - {fileID: 4812571223276294233}
   m_Volume: f7e73f29296233977a116d9e454b5b25
   m_Pitch: bf83cbb58a28b5bbd83ed52e6ccf5bd1
   m_Send: 00000000000000000000000000000000
@@ -82,13 +94,79 @@ AudioMixerSnapshotController:
   m_SnapshotID: 868ffff943d35cc67944b99d5ac62e4c
   m_FloatValues: {}
   m_TransitionOverrides: {}
+--- !u!243 &308728277191990773
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Drill
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 6c62eda13296cfc2f9ae9f66272cea9d
+  m_Children: []
+  m_Volume: 7972da23095e7ddf7a147d45d94a5cbf
+  m_Pitch: de5bf00a91f36b2e194868c005821bad
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 2159930207970160719}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &2159930207970160719
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 63e4cc70127f1d456a75f4c67d10fef3
+  m_EffectName: Attenuation
+  m_MixLevel: 2e5473a5a79d4818b8c5067990616c0d
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &3007301006974279849
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: fa9baba841fc50d4aae9b451687c2df7
+  m_EffectName: Attenuation
+  m_MixLevel: 21e7af0267864e34ea0131a0d580413e
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &4812571223276294233
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Drilling
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: ddb8b0cd56977a224ad2fee00a3a4b25
+  m_Children: []
+  m_Volume: 84f9162d038b41bcbb827ecb4a539bb4
+  m_Pitch: 4487cf593f7874bf09ec46e7d20c2fcf
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 3007301006974279849}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &6280440431478618197
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ambient
+  m_Name: Wind
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 65856930f31336fad81cc4da5d504856
   m_Children: []

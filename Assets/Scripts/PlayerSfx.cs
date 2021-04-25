@@ -27,7 +27,7 @@ namespace Neonmoe.MetalMiner {
                                                   Openness * WindVolume,
                                                   10f * Time.deltaTime);
             WindInsideSource.volume = Mathf.Lerp(WindInsideSource.volume,
-                                                  (1.0f - Openness) * 0.4f * WindVolume,
+                                                  (1.0f - Openness) * WindVolume,
                                                   10f * Time.deltaTime);
         }
 
