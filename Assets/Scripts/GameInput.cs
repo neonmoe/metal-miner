@@ -59,5 +59,9 @@ namespace Neonmoe.MetalMiner {
         public bool IsCharacterDrilling() {
             return MouseLocked && Input.GetButton("Fire1");
         }
+
+        public bool IsCharacterDepositing() {
+            return MouseLocked && Input.GetButtonDown("Fire2");
+        }
     }
 }

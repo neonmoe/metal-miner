@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Neonmoe.MetalMiner {
     public class Chunk : MonoBehaviour {
+        public static int MINERALS = 0;
+
         public const int WIDTH = 16;
         public const int HEIGHT = 8;
         public const int DEPTH = 16;
@@ -80,10 +82,13 @@ namespace Neonmoe.MetalMiner {
             int TileZ = (Mathf.FloorToInt(worldPos.z * DEPTH / WORLD_SPACE_DEPTH) % DEPTH + DEPTH) % DEPTH;
             int Index = TileX + TileY * WIDTH + TileZ * WIDTH * HEIGHT;
             EntirelyEmpty = false;
-            Tiles[Index] -= damage;
-            if (Tiles[Index] <= 0.0f) {
-                Dirty = true;
-                Untouched = false;
+            if (Tiles[Index] > 0) {
+                Tiles[Index] -= damage;
+                if (Tiles[Index] <= 0.0f) {
+                    Dirty = true;
+                    Untouched = false;
+                    MINERALS++;
+                }
             }
         }
     }

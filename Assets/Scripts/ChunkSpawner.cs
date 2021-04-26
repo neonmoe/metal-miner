@@ -18,24 +18,27 @@ namespace Neonmoe.MetalMiner {
                             continue;
                         }
 
-                        Vector3 ChunkVec = GetChunkVector(transform.position +
-                                                          new Vector3(OffX * Chunk.WORLD_SPACE_WIDTH,
-                                                                      OffY * Chunk.WORLD_SPACE_HEIGHT,
-                                                                      OffZ * Chunk.WORLD_SPACE_DEPTH));
+                        Vector3 Offset = new Vector3(OffX * Chunk.WORLD_SPACE_WIDTH,
+                                                     OffY * Chunk.WORLD_SPACE_HEIGHT,
+                                                     OffZ * Chunk.WORLD_SPACE_DEPTH);
+                        Vector3 ChunkVec = GetChunkVector(transform.position + Offset);
+                        Vector3 ChunkVecWorldSpace = GetChunkVector(transform.position + Offset, false);
+                        Vector3 ChunkPosition = new Vector3(ChunkVecWorldSpace.x * Chunk.WORLD_SPACE_WIDTH - Chunk.WORLD_SPACE_WIDTH / 2f,
+                                                            ChunkVecWorldSpace.y * Chunk.WORLD_SPACE_HEIGHT,
+                                                            ChunkVecWorldSpace.z * Chunk.WORLD_SPACE_DEPTH - Chunk.WORLD_SPACE_DEPTH / 2f);
                         ChunksInRange.Add(ChunkVec);
                         if (!Chunks.ContainsKey(ChunkVec)) {
                             GameObject NewChunk = Instantiate<GameObject>(ChunkPrefab);
                             Chunk Chunk = NewChunk.GetComponent<Chunk>();
                             ChunkMeshGenerator ChunkMeshGenerator = NewChunk.GetComponent<ChunkMeshGenerator>();
-                            NewChunk.transform.position = new Vector3(ChunkVec.x * Chunk.WORLD_SPACE_WIDTH - Chunk.WORLD_SPACE_WIDTH / 2f,
-                                                                      ChunkVec.y * Chunk.WORLD_SPACE_HEIGHT,
-                                                                      ChunkVec.z * Chunk.WORLD_SPACE_DEPTH - Chunk.WORLD_SPACE_DEPTH / 2f);
+                            NewChunk.transform.position = ChunkPosition;
                             Chunk.Generate((int)ChunkVec.x, (int)ChunkVec.y, (int)ChunkVec.z);
                             ChunkMeshGenerator.Regenerate();
                             Chunks.Add(ChunkVec, NewChunk);
                         } else {
                             GameObject OldChunk = Chunks[ChunkVec];
                             OldChunk.SetActive(true);
+                            OldChunk.transform.position = ChunkPosition;
                             Chunk Chunk = OldChunk.GetComponent<Chunk>();
                             ChunkMeshGenerator ChunkMeshGenerator = OldChunk.GetComponent<ChunkMeshGenerator>();
                             if (Chunk.Dirty) {
@@ -60,10 +63,15 @@ namespace Neonmoe.MetalMiner {
         }
 
         /// Returns a Vector with *integers* which are in *chunk coordinates*.
-        private Vector3 GetChunkVector(Vector3 worldPosition) {
+        private Vector3 GetChunkVector(Vector3 worldPosition, bool wrap = true) {
             int ChunkX = Mathf.FloorToInt((worldPosition.x + Chunk.WORLD_SPACE_WIDTH / 2) / Chunk.WORLD_SPACE_WIDTH);
             int ChunkY = Mathf.FloorToInt((worldPosition.y) / Chunk.WORLD_SPACE_HEIGHT);
             int ChunkZ = Mathf.FloorToInt((worldPosition.z + Chunk.WORLD_SPACE_DEPTH / 2) / Chunk.WORLD_SPACE_DEPTH);
+            if (wrap) {
+                int WrapAt = 5;
+                ChunkX = ((ChunkX % WrapAt) + WrapAt) % WrapAt;
+                ChunkZ = ((ChunkZ % WrapAt) + WrapAt) % WrapAt;
+            }
             return new Vector3(ChunkX, ChunkY, ChunkZ);
         }
 

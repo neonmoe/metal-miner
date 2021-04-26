@@ -16,6 +16,11 @@ namespace Neonmoe.MetalMiner {
         [Header("Drill size")]
         public int TilePickingRadius = 1;
         public float TileDistanceCutoff = 1.5f;
+        [Header("Mineral deposit mechanic")]
+        public GameObject MineralDepositNote;
+        public GameObject MineralPrefab;
+        public Transform MineralLauncherTransform;
+        public AudioSource BopAudio;
 
         private Vector3 LerpedPosition;
         private Vector3 TargetPosition;
@@ -28,10 +33,24 @@ namespace Neonmoe.MetalMiner {
             float DrillDistance = 3.5f;
             Vector3 DrillPoint = TargetingTransform.position + TargetingTransform.forward * (DrillDistance - 0.7f);
             bool CanDrill = false;
+            MineralDepositNote.SetActive(false);
+
             RaycastHit Hit;
             if (Physics.Raycast(TargetingTransform.position, TargetingTransform.forward, out Hit, DrillDistance)) {
                 CanDrill = true;
                 DrillPoint = Hit.point - TargetingTransform.forward * 0.2f;
+
+                if (Hit.collider.name == "MineralShop" && Chunk.MINERALS > 0) {
+                    MineralDepositNote.SetActive(true);
+                    if (GameInput.IsCharacterDepositing()) {
+                        GameObject SpawnedMineral = Instantiate<GameObject>(MineralPrefab);
+                        SpawnedMineral.transform.position = MineralLauncherTransform.position;
+                        Rigidbody MineralBody = SpawnedMineral.GetComponent<Rigidbody>();
+                        MineralBody.AddForce(MineralLauncherTransform.forward * 20f, ForceMode.VelocityChange);
+                        BopAudio.Play();
+                        Chunk.MINERALS--;
+                    }
+                }
             }
 
             Vector3 DrillAngles = DrillBitRootTransform.localEulerAngles;
